@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'q-cron-maker',
-  template: `
-    <p>
-      q-cron-maker works!
-    </p>
-  `,
+  templateUrl: 'q-cron-maker.component.html',
   styles: [],
 })
 export class QCronMakerComponent implements OnInit {
