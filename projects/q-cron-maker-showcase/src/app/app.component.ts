@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'q-cron-maker-showcase';
+  public cronExpression = '0 0 1/1 * *';
+
 }

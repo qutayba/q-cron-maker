@@ -1,3 +1,248 @@
-<p>
-  q-cron-maker works!!!!
-</p>
+<pre>{{ options | json }}</pre>
+<pre>{{ expression | json }}</pre>
+
+<mat-accordion multi>
+	<!-- Seconds section -->
+	<mat-expansion-panel
+		hideToggle
+		[expanded]="options.controls.seconds"
+		[disabled]="!options.controls.seconds"
+	>
+		<mat-expansion-panel-header>
+			<mat-panel-title>
+				Seconds
+			</mat-panel-title>
+			<mat-panel-description>
+				<mat-slide-toggle
+					[(ngModel)]="options.controls.seconds"
+					(change)="updateExpressionState()"
+				></mat-slide-toggle>
+			</mat-panel-description>
+		</mat-expansion-panel-header>
+
+		<mat-radio-group
+			(change)="clearParams('seconds')"
+			[(ngModel)]="expression.seconds.type"
+		>
+			<mat-radio-button [value]="SelectionType.All" class="with-mb">
+				Every second.
+			</mat-radio-button>
+			<mat-radio-button [value]="SelectionType.Repeated">
+				Every
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.seconds.params['repeat']">
+						<mat-option *ngFor="let s of seconds" [value]="s">{{s}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+				second(s) starting at second
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.seconds.params['starting']">
+						<mat-option *ngFor="let s of seconds" [value]="s">{{s}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+				.
+			</mat-radio-button>
+			<mat-radio-button [value]="SelectionType.Specific">
+				Specific second (choose one or many)
+				<mat-form-field style="width: 150px;">
+					<mat-select multiple [(ngModel)]="expression.seconds.params['on']">
+						<mat-option *ngFor="let s of seconds" [value]="s">{{s}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+				.
+			</mat-radio-button>
+
+			<mat-radio-button [value]="SelectionType.Range">
+				Every second between
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.seconds.params['start']">
+						<mat-option
+							*ngFor="let s of seconds"
+							[disabled]="s > expression.seconds.params['end']"
+							[value]="s"
+						>
+							{{s}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				and
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.seconds.params['end']">
+						<mat-option
+							*ngFor="let s of seconds"
+							[disabled]="s < expression.seconds.params['start']"
+							[value]="s"
+						>
+							{{s}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				.
+			</mat-radio-button>
+		</mat-radio-group>
+	</mat-expansion-panel>
+
+	<!-- Minutes section -->
+	<mat-expansion-panel
+		hideToggle
+		[expanded]="options.controls.minutes"
+		[disabled]="!options.controls.minutes"
+	>
+		<mat-expansion-panel-header>
+			<mat-panel-title>
+				Minutes
+			</mat-panel-title>
+			<mat-panel-description>
+				<mat-slide-toggle
+					(change)="updateExpressionState()"
+					[(ngModel)]="options.controls.minutes"
+				></mat-slide-toggle>
+			</mat-panel-description>
+		</mat-expansion-panel-header>
+
+		<mat-radio-group
+			[(ngModel)]="expression.minutes.type"
+			(change)="clearParams('minutes')"
+		>
+			<mat-radio-button [value]="SelectionType.All" class="with-mb">
+				Every minute.
+			</mat-radio-button>
+			<mat-radio-button [value]="SelectionType.Repeated">
+				Every
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.minutes.params['repeat']">
+						<mat-option *ngFor="let s of minutes" [value]="s">{{s}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+				second(s) starting at minute
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.minutes.params['starting']">
+						<mat-option *ngFor="let s of minutes" [value]="s">{{s}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+				.
+			</mat-radio-button>
+			<mat-radio-button [value]="SelectionType.Specific">
+				Specific minute (choose one or many)
+				<mat-form-field style="width: 150px;">
+					<mat-select multiple [(ngModel)]="expression.minutes.params['on']">
+						<mat-option *ngFor="let s of minutes" [value]="s">{{s}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+				.
+			</mat-radio-button>
+
+			<mat-radio-button [value]="SelectionType.Range">
+				Every minute between
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.minutes.params['start']">
+						<mat-option
+							*ngFor="let s of minutes"
+							[disabled]="s > expression.minutes.params['end']"
+							[value]="s"
+						>
+							{{s}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				and
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.minutes.params['end']">
+						<mat-option
+							*ngFor="let s of minutes"
+							[disabled]="s < expression.minutes.params['start']"
+							[value]="s"
+						>
+							{{s}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				.
+			</mat-radio-button>
+		</mat-radio-group>
+	</mat-expansion-panel>
+
+	<!-- Hours section -->
+	<mat-expansion-panel
+		hideToggle
+		[expanded]="options.controls.hours"
+		[disabled]="!options.controls.hours"
+	>
+		<mat-expansion-panel-header>
+			<mat-panel-title>
+				Hours
+			</mat-panel-title>
+			<mat-panel-description>
+				<mat-slide-toggle
+					(change)="updateExpressionState()"
+					[(ngModel)]="options.controls.hours"
+				></mat-slide-toggle>
+			</mat-panel-description>
+		</mat-expansion-panel-header>
+
+		<mat-radio-group
+			[(ngModel)]="expression.hours.type"
+			(change)="clearParams('hours')"
+		>
+			<mat-radio-button [value]="SelectionType.All" class="with-mb">
+				Every hour.
+			</mat-radio-button>
+			<mat-radio-button [value]="SelectionType.Repeated">
+				Every
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.hours.params['repeat']">
+						<mat-option *ngFor="let s of hours" [value]="s">{{s}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+				hour(s) starting at hour
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.hours.params['starting']">
+						<mat-option *ngFor="let s of hours" [value]="s">
+							{{s | number:'2.0'}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				.
+			</mat-radio-button>
+			<mat-radio-button [value]="SelectionType.Specific">
+				Specific hour (choose one or many)
+				<mat-form-field style="width: 150px;">
+					<mat-select multiple [(ngModel)]="expression.hours.params['on']">
+						<mat-option *ngFor="let s of hours" [value]="s">
+							{{s | number:'2.0'}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				.
+			</mat-radio-button>
+
+			<mat-radio-button [value]="SelectionType.Range">
+				Every hour between
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.hours.params['start']">
+						<mat-option
+							*ngFor="let s of hours"
+							[disabled]="s > expression.hours.params['end']"
+							[value]="s"
+						>
+							{{s | number:'2.0'}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				and
+				<mat-form-field>
+					<mat-select [(ngModel)]="expression.hours.params['end']">
+						<mat-option
+							*ngFor="let s of hours"
+							[disabled]="s < expression.hours.params['start']"
+							[value]="s"
+						>
+							{{s | number:'2.0'}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				.
+			</mat-radio-button>
+		</mat-radio-group>
+	</mat-expansion-panel>
+</mat-accordion>

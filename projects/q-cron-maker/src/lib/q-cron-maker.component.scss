@@ -1,0 +1,36 @@
+mat-expansion-panel {
+	min-width: 400px;
+}
+
+mat-slide-toggle {
+	position: absolute;
+	right: 24px;
+	top: 11px;
+}
+
+mat-radio-button {
+	display: flex;
+	flex-direction: column;
+	margin: 15px 0;
+}
+
+mat-radio-button {
+	margin: 5px;
+}
+
+mat-radio-button mat-form-field {
+	width: 50px;
+	margin: auto 5px;
+
+	mat-select {
+		text-align: center !important;
+	}
+
+	.mat-form-field-infix {
+		border: none !important;
+	}
+}
+
+.with-mb {
+	margin-bottom: 1.4em;
+}
